@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html >
   <head>
@@ -9,15 +10,15 @@
     <link rel="stylesheet" href="/bigMWebService/elegant-login-form/css/style.css">
   </head>
   <body>
-    <form class="login">
+    <form class="login" role="form" action="action_login.php" method="get">
   <fieldset>
   	<legend class="legend">Login</legend>
     <div class="input">
-    	<input type="email" placeholder="Email" required />
+    	<input id="login" name="login" type="text" placeholder="Email" required />
       <span><i class="fa fa-envelope-o"></i></span>
     </div>
     <div class="input">
-    	<input type="password" placeholder="Password" required />
+    	<input id="senha" name="senha" type="password" placeholder="Password" required />
       <span><i class="fa fa-lock"></i></span>
     </div>
     <button type="submit" class="submit"><i class="fa fa-long-arrow-right"></i></button>

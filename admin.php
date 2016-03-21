@@ -1,8 +1,9 @@
 <!-- fazer area de rejeitar pedidos-->
-
+<?php
+	include 'model/session.php';
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
 	<meta charset="UTF-8">
 	<title>Big Mengão</title>
@@ -51,11 +52,22 @@
 					<li>
 					</li>
 				</ul>
+				<ul class="nav navbar-right top-nav ">
+					<li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>
+						Admin
+						<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li> <a href="#"style="color: #428bca;" ><i class="fa fa-fw fa-user"></i> Perfil</a> </li>
+							<li> <a href="#" style="color: #428bca;"><i class="fa fa-fw fa-envelope"></i> Caixa de Mensagens</a> </li>
+							<li> <a href="#" style="color: #428bca;"><i class="fa fa-fw fa-gear"></i> Configuração de Conta</a> </li>
+							<li class="divider"></li>
+							<li> <a href="action_logout.php"style="color: #c94141;" ><i class="fa fa-fw fa-power-off"></i> Sair</a> </li>
+						</ul>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</nav>
-
-
 	<div class="row">
 		<div class="col-md-2"></div>
 		<div class="col-md-8">
@@ -118,7 +130,5 @@
 				</div>
 				<div class="col-md-2"></div>
 			</div>
-
 </body>
-
 </html>
