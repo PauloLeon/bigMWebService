@@ -2,7 +2,7 @@
 <?php
 	include 'model/session.php';
 	//fazer isso aqui receber os pedidos
-	$jsonPedidos = $userLogado->getEscolasJSON($userLogado->getId());
+	//$jsonPedidos = $userLogado->getEscolasJSON($userLogado->getId());
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

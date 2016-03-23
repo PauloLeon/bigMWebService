@@ -3,6 +3,8 @@
 session_start();
 // Include database class
 include '../bigMWebService/model/conection.php';
+//require user class
+include('../bigMWebService/model/User.php');
 
 // Define configuration
 define("DB_HOST", "localhost:8889");
@@ -40,7 +42,10 @@ if(empty($errorMessage))
       echo '<meta HTTP-EQUIV="Refresh" CONTENT="0; URL=../bigMWebService/index.php">';
     }else{
       debug_to_console($row);
-      $_SESSION['userLogado'] =true;
+      $id = $row['id'];
+      $nome = $row['nome'];
+      $_SESSION['userLogado'] = new User($nome ,$id );
+      debug_to_console("daqui não passou");
       echo '<meta HTTP-EQUIV="Refresh" CONTENT="0; URL=../bigMWebService/admin.php">';
     }
 }

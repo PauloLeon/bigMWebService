@@ -20,11 +20,11 @@ class Database{
       );
       try {
         $this->dbh = new PDO($dsn, $this->user, $this->pass, $options);
-        //echo "conection okay";
+        debug_to_console( "conection okay");
       }// Catch any errors
       catch (PDOException $e) {
         $this->error = $e->getMessage();
-        //echo "refuse";
+        debug_to_console( "refuse");
       }
   }
 
@@ -102,6 +102,15 @@ class Database{
   /*for debug params in stmt*/
   public function debugDumpParams(){
       return $this->stmt->debugDumpParams();
+  }
+
+  function debug_to_console( $data )
+  {
+       if ( is_array( $data ) )
+           $output = "<script>console.log( 'Debug Objects: " . implode( ',', $data) . "' );</script>";
+       else
+          $output = "<script>console.log( 'Debug Objects: " . $data . "' );</script>";
+       echo $output;
   }
 
 

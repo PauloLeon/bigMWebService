@@ -10,7 +10,11 @@ header('Content-Type: text/html; charset=UTF-8');
 		echo $output;
 	}
 
+	require_once('model/User.php');
 	session_start();
+
+	if($_SESSION['userLogado']=="")
+	debug_to_console("Sessao não iniciada direito - ARQUIVO:actionLogin");
 
 	if((!isset ($_SESSION['userLogado']) == true))
 	{
