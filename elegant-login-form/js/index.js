@@ -11,5 +11,5 @@ $(".login").submit(function(){
   $(".submit").css({"background":"#2ecc71", "border-color":"#2ecc71"});
   $(".feedback").show().animate({"opacity":"1", "bottom":"-80px"}, 400);
   $("input").css({"border-color":"#2ecc71"});
-  return false;
+  //return false;
 });
