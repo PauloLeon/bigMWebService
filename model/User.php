@@ -1,6 +1,8 @@
 <?php
 // Include database class
-require_once '../bigMWebService/model/conection.php';
+debug_to_console("chegou nessa porra");
+require_once 'model/conection.php';
+debug_to_console("PASSOU nessa porra");
 
 	class User
 	{
@@ -9,15 +11,16 @@ require_once '../bigMWebService/model/conection.php';
 		private $userName;
 		private $idUser;
 		private $link;
-		// Define configuration
-		define("DB_HOST", "localhost:8889");
-		define("DB_USER", "root");
-		define("DB_PASS", "root");
-		define("DB_NAME", "bigm");
+
 
 
 		function __construct($nomeSession,$idUserSession)
     {
+				// Define configuration
+				define("DB_HOST", "localhost:8889");
+				define("DB_USER", "root");
+				define("DB_PASS", "root");
+				define("DB_NAME", "bigm");
 				debug_to_console("pra ca veio");
 				$this->connDataBase = new Database();
 				$this->userName = $nomeSession;

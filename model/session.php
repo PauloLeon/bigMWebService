@@ -1,4 +1,6 @@
 <?php
+
+
 header('Content-Type: text/html; charset=UTF-8');
 	function debug_to_console( $data )
 	{
@@ -16,7 +18,7 @@ header('Content-Type: text/html; charset=UTF-8');
 	if($_SESSION['userLogado']=="")
 	debug_to_console("Sessao não iniciada direito - ARQUIVO:actionLogin");
 
-	if((!isset ($_SESSION['userLogado']) == true))
+	if(isset($_SESSION['userLogado']))
 	{
 		debug_to_console("deslogou do sistema");
 		unset($_SESSION['userLogado']);

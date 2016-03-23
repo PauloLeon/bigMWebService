@@ -4,7 +4,7 @@ session_start();
 // Include database class
 include '../bigMWebService/model/conection.php';
 //require user class
-include('../bigMWebService/model/User.php');
+include ('../bigMWebService/model/User.php');
 
 // Define configuration
 define("DB_HOST", "localhost:8889");
