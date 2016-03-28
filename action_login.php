@@ -10,7 +10,7 @@ include ('../bigMWebService/model/User.php');
 define("DB_HOST", "localhost:8889");
 define("DB_USER", "root");
 define("DB_PASS", "root");
-define("DB_NAME", "bigm");
+define("DB_NAME", "webapp");
 
 //recebendo os dados
 if(empty($_GET['login'])){$errorMessage .= "<li>login vazio</li>";}
@@ -27,12 +27,13 @@ if(empty($errorMessage))
     $database = new Database();
 
     //retornando do banco
-    $database->query('SELECT id, nome, senha FROM usuario WHERE nome = :nome AND senha = :senha');
+    $database->query('SELECT idUsuario, nome, senha FROM usuario WHERE nome = :nome AND senha = :senha');
     $database->bind(':nome', $login, PDO::PARAM_STR);
     $database->bind(':senha', $senha, PDO::PARAM_STR);
     $row = $database->single();
     if (empty($row)) {
       # code...
+       debug_to_console("não achou nada");
       //destruindo sessao;
       $_SESSION = array();
       if (isset($_COOKIE[session_name()])) {
@@ -42,13 +43,24 @@ if(empty($errorMessage))
       echo '<meta HTTP-EQUIV="Refresh" CONTENT="0; URL=../bigMWebService/index.php">';
     }else{
       debug_to_console($row);
-      $id = $row['id'];
+      $id = $row['idUsuario'];
       $nome = $row['nome'];
       $_SESSION['userLogado'] = new User($nome ,$id );
-      debug_to_console("daqui não passou");
+      if($_SESSION['userLogado']=="")
+      debug_to_console("Sessao não iniciada direito - ARQUIVO:actionLogin");
+      debug_to_console($_SESSION['userLogado']->getNome());
       echo '<meta HTTP-EQUIV="Refresh" CONTENT="0; URL=../bigMWebService/admin.php">';
     }
 }
+
+if($_SESSION['userLogado']==""){
+  debug_to_console("Sessao não iniciada direito - ARQUIVO:actionLogin");
+}else{
+  debug_to_console("Aqui Existe");
+}
+
+exit;
+
 
 
 function debug_to_console( $data )
@@ -60,3 +72,6 @@ function debug_to_console( $data )
 
     echo $output;
 }
+
+
+?>

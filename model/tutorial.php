@@ -76,3 +76,5 @@ echo "<pre>";
 print_r($rows);
 echo "</pre>";
 echo $database->rowCount();
+
+?>

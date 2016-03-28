@@ -1,4 +1,7 @@
 <?php
+require_once('model/User.php');
+session_start();
+
 
 
 header('Content-Type: text/html; charset=UTF-8');
@@ -12,13 +15,12 @@ header('Content-Type: text/html; charset=UTF-8');
 		echo $output;
 	}
 
-	require_once('model/User.php');
-	session_start();
+
 
 	if($_SESSION['userLogado']=="")
-	debug_to_console("Sessao não iniciada direito - ARQUIVO:actionLogin");
+	debug_to_console("Sessao não iniciada direito - ARQUIVO:session");
 
-	if(isset($_SESSION['userLogado']))
+	if((!isset ($_SESSION['userLogado']) == true))
 	{
 		debug_to_console("deslogou do sistema");
 		unset($_SESSION['userLogado']);

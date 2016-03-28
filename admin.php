@@ -1,8 +1,22 @@
-<!-- fazer area de rejeitar pedidos-->
+
 <?php
-	include 'model/session.php';
+error_reporting(0);
+// Include database class
+include '../bigMWebService/model/conection.php';
+//require user class
+include ('../bigMWebService/model/User.php');
+$id = "1";
+$nome = "admin";
+$foda = new User($nome ,$id );
+debug_to_console($foda->getNome());
+  // $user = new User("admin" ,"1" );
+	//include 'model/session.php';
+	//session_start();
+	//if($_SESSION['userLogado']=="")
+	//debug_to_console("Sessao não iniciada direito - ARQUIVO:actionLogin");
 	//fazer isso aqui receber os pedidos
-	//$jsonPedidos = $userLogado->getEscolasJSON($userLogado->getId());
+$jsonPedidos = $foda->getPedidosJSON();
+debug_to_console($jsonPedidos);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -127,7 +141,6 @@
 						<div class="panel-body">
 							<ul id="listPedidos" class="list list-group" style="width: auto">
 								<?php
-			              $jsonPedidos = json_decode($jsonPedidos);
 			              debug_to_console($jsonPedidos);
 			              if (empty($jsonPedidos)) {
 			                  echo'<li class="list-group-item">'.'Ainda não recebemos pedidos hoje.'.'</li>';
@@ -135,22 +148,21 @@
 
 			              foreach ($jsonPedidos as $val) {
 			                  echo'<li
-			              				  id='.$val->idPedidos.'
-			              				  cliente="'.utf8_decode($val->nome).'"
-			              				  cidade="'.utf8_decode($val->cidade).'" class="list-group-item"  data-toggle="modal" data-target="#editModal" style="padding-top: 15px;padding-bottom: 15px;" >
+			              				  id='.$val['idPedidos'].'
+			              				  cliente="'.$val['fk_idCliente'].'" class="list-group-item"  data-toggle="modal" data-target="#editModal" style="padding-top: 15px;padding-bottom: 15px;" >
 																	 <div class="pedidosSearch row">
 		 																<div class="col-xs-2 col-sm-2 col-md-2">
-		 																	<h3 class="panel-title">'.utf8_decode($val->pedido).'</h3></div>
+		 																	<h3 class="panel-title">'.$val['idPedidos'].'</h3></div>
 		 																<div class="col-xs-2 col-sm-2 col-md-2">
-		 																	<h3 class="panel-title">'.utf8_decode($val->cliente).'</h3></div>
+		 																	<h3 class="panel-title">'.$val['fk_idCliente'].'</h3></div>
 		 																<div class="col-xs-2 col-sm-2 col-md-2">
-		 																	<h3 class="panel-title">'.utf8_decode($val->status).'</h3></div>
+		 																	<h3 class="panel-title">'.$val['status'].'</h3></div>
 		 															<div class="col-xs-2 col-sm-2 col-md-2">
-		 																<h3 class="panel-title">'.utf8_decode($val->hora).'</h3></div>
+		 																<h3 class="panel-title">'.$val['data'].'</h3></div>
 		 														<div class="col-xs-4 col-sm-4 col-md-4">
-		 															<h3 class="panel-title">'.utf8_decode($val->tempoEntrega).'</h3></div>
+		 															<h3 class="panel-title">'.$val['tempoDeEntrega'].'</h3></div>
 		 													</div>
-			              				</li>"';
+			              				</li>';
 			              }
 			          ?>
 							</ul>
@@ -160,32 +172,15 @@
 				<div class="col-md-2"></div>
 			</div>
 
-			<!--MODAL DETALHE-->
+			<!--MODAL DETALHE -Card -->
 			<div class="modal fade" id="detalheModal">
 			  <div class="modal-dialog">
 			    <div class="modal-content">
 			      <div class="modal-header">
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			        <h4 class="modal-title">Incluir Nova Instituição...</h4>
 			      </div>
 			      <div class="modal-body">
-			         <div class="thumbnail" style="background-color: mintcream;">
-			      <form role="form" action="Cadastrar.php" method="get">
-			        <div class="form-group">
-			          <label class="control-label" for="exampleInputEmail1">Nome</label>
-			          <input class="form-control" id="exampleInputEmail1" placeholder="Nome da Escola"
-			               type="text" name="inputNome" value="<?=$varNome;?>">
-			        </div>
-			        <div class="form-group">
-			          <label class="control-label" for="exampleInputEmail1">Cidade</label>
-			          <input class="form-control" id="exampleInputEmail1" placeholder="Cidade da Escola"
-			               type="text" name="inputCidade"	value="<?=$varCidade;?>">
-			        </div>
-			      </div>
 			      </div>
 			      <div class="modal-footer">
-			        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-			        <button type="submit" class="btn btn-julio" name="formSubmit" value="submit_insert">Cadastrar</button>
 			      </div>
 			      </form>
 			    </div><!-- /.modal-content -->
@@ -193,3 +188,14 @@
 			</div><!-- /.modal -->
 </body>
 </html>
+
+<?php
+function debug_to_console( $data )
+{
+		 if ( is_array( $data ) )
+				 $output = "<script>console.log( 'Debug Objects: " . implode( ',', $data) . "' );</script>";
+		 else
+				$output = "<script>console.log( 'Debug Objects: " . $data . "' );</script>";
+		 echo $output;
+}
+ ?>

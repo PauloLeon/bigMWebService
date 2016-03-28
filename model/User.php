@@ -1,8 +1,7 @@
 <?php
 // Include database class
-debug_to_console("chegou nessa porra");
 require_once 'model/conection.php';
-debug_to_console("PASSOU nessa porra");
+
 
 	class User
 	{
@@ -20,13 +19,16 @@ debug_to_console("PASSOU nessa porra");
 				define("DB_HOST", "localhost:8889");
 				define("DB_USER", "root");
 				define("DB_PASS", "root");
-				define("DB_NAME", "bigm");
-				debug_to_console("pra ca veio");
+				define("DB_NAME", "webapp");
 				$this->connDataBase = new Database();
 				$this->userName = $nomeSession;
 				$this->idUser = $idUserSession;
-				debug_to_console("saindo");
  	  }
+
+		function getNome()
+		{
+			return $this->userName;
+		}
 
 		function debug_to_console( $data )
 		{
@@ -35,6 +37,17 @@ debug_to_console("PASSOU nessa porra");
    			 else
         		$output = "<script>console.log( 'Debug Objects: " . $data . "' );</script>";
    			 echo $output;
+		}
+
+
+		function getPedidosJSON()
+		{
+
+			$this->connDataBase->query('SELECT * FROM Pedidos');
+			$rows = $this->connDataBase->resultset();
+			debug_to_console($rows);
+			$json = json_encode($rows);
+			return $rows;
 		}
 
 	}
