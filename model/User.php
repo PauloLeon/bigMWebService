@@ -45,7 +45,6 @@ require_once 'model/conection.php';
 
 			$this->connDataBase->query('SELECT * FROM Pedidos');
 			$rows = $this->connDataBase->resultset();
-			debug_to_console($rows);
 			$json = json_encode($rows);
 			return $rows;
 		}

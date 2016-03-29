@@ -17,15 +17,14 @@ class Database{
       // Set options
       $options = array(
       PDO::ATTR_PERSISTENT => true,
-      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+      PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8'
       );
       try {
         $this->dbh = new PDO($dsn, $this->user, $this->pass, $options);
-        debug_to_console( "conection okay");
       }// Catch any errors
       catch (PDOException $e) {
         $this->error = $e->getMessage();
-        debug_to_console( "refuse");
       }
   }
 
