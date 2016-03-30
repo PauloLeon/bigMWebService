@@ -49,6 +49,15 @@ require_once 'model/conection.php';
 			return $rows;
 		}
 
+		function getItensJSON()
+		{
+
+			$this->connDataBase->query('SELECT * FROM item');
+			$rows = $this->connDataBase->resultset();
+			$json = json_encode($rows);
+			return $rows;
+		}
+
 	}
 
 ?>

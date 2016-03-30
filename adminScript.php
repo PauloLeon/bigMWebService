@@ -1,6 +1,4 @@
-<!--<script src"/bigMWebService/js/jquery-2.2.1.min.js"></script>-->
-<script type="text/javascript" src="js/jquery-min.js"></script>
-<script src="/bigMWebService/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+<script src"/bigMWebService/js/jquery-2.2.1.min.js"></script>
 <script src="js/bootstrap-switch.js"></script>
 <script src="/bigMWebService/js/list.js"></script>
 
@@ -12,7 +10,7 @@
       valueNames: [ 'pedidosSearch' ]
     };
 
-    var userList1 = new List('pedidos', optionsnew);
+    var userList1 = new List('admin', optionsnew);
 
     //definindo os id's do checkbox
     $("[id='my-checkbox']").bootstrapSwitch();
@@ -30,7 +28,7 @@
     $("#listStatus li").click(function() {
       console.log($('this').prop('id'));
 		});
-
+/*
     //para quando o modal abrir
     $('#detalheModal').on('show.bs.modal', function (e)
     {
@@ -42,6 +40,6 @@
     //para quando o modal fechar retornar ao padrão
     $('#detalheModal').on('hidden.bs.modal', function (e) {
       $("[id='my-checkbox']").bootstrapSwitch('state',false);
-    });
+    });*/
 
  </script>
