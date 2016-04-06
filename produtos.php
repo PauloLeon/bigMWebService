@@ -11,6 +11,15 @@ $nome = "admin";
 $foda = new User($nome ,$id );
 $jsonItens= $foda->getItensJSON();
 debug_to_console($jsonItens);
+
+if (!empty($_POST['ativo'])) {
+		$foda->setAtivoJSON($_POST['id']);
+}
+if (!empty($_POST['inativo'])) {
+		$foda->setInativoJSON($_POST['id']);
+}
+
+
 function debug_to_console( $data )
 {
 		 if ( is_array( $data ) )
@@ -148,7 +157,7 @@ function debug_to_console( $data )
 																																		 //para resolver o utf-8
 																																		 $ativo = $val['ativo'];
 																																		 if ($ativo==1) {
-																																		 	$ativo = "Ativo";
+																																		 	$ativo = "Disponível";
 																																			echo'<li id='.$val['idItem'].' class="list-group-item"  data-toggle="modal" data-target="#detalheModal" style="padding-top: 15px;padding-bottom: 15px;" >
  																																						 <div class="pedidosSearch row">
  																																								 <div class="col-xs-4 col-sm-4 col-md-4">'.$val['nome'].'</div>
@@ -156,7 +165,7 @@ function debug_to_console( $data )
  																																						 </div>
  																																				 </li>';
 																																		 } else {
-																																		 	$ativo = "Em falta";
+																																		 	$ativo = "Indisponível";
 																																			echo'<li id='.$val['idItem'].' class="list-group-item"  data-toggle="modal" data-target="#detalheModal" style="padding-top: 15px;padding-bottom: 15px;" >
  																																						 <div class="pedidosSearch row">
  																																								 <div class="col-xs-4 col-sm-4 col-md-4">'.$val['nome'].'</div>
@@ -185,11 +194,15 @@ function debug_to_console( $data )
                                                         <h4 style="" class="modal-title">Produto no App</h4>
                                                     </div>
                                                     <div class="modal-body">
+																											<form class="form-horizontal" role="form" draggable="true"
+																					            action="produtos.php" method="post">
                                                         <h9 style="color: red;" class="modal-title">Obs. Desativando esse produto os clientes não poderão pedir em seu celular o produto em questão.</h9>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Desativar</button>
+                                                        <button type="button" class="btn btn-default" name="inativo" value="Submit">Desativar</button>
+																												<button type="submit" class="btn btn-default" name="ativo" value="Submit">Ativar</button>
                                                     </div>
+																									</form>
                                                 </div>
                                                 <!-- /.modal-content -->
                                             </div>

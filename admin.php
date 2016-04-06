@@ -117,7 +117,7 @@ $jsonPedidos = $foda->getPedidosJSON();
 			              				  id='.$val['idPedidos'].'
 			              				  cliente="'.$val['fk_idCliente'].'" class="list-group-item"  data-toggle="modal" data-target="#detalheModal" style="padding-top: 15px;padding-bottom: 15px;" >
 																	 <div class="pedidosSearch row">
-		 																<div class="col-xs-4 col-sm-4 col-md-4">'.$val['fk_idCliente'].'</div>
+		 																<div class="col-xs-4 col-sm-4 col-md-4">'.$val['nome'].'</div>
 		 																<div class="col-xs-4 col-sm-4 col-md-4">'.$status.'</div>
 		 															<div class="col-xs-4 col-sm-4 col-md-4">'.$val['data'].'</div>
 		 													</div>

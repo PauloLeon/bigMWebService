@@ -42,8 +42,12 @@ require_once 'model/conection.php';
 
 		function getPedidosJSON()
 		{
-
-			$this->connDataBase->query('SELECT * FROM Pedidos');
+			/* SQL QUE SO RETORNA O DO DIA EM QUESTAO
+			SELECT DISTINCT p.idPedidos, p.fk_idCliente, p.status, p.data, p.tempoDeEntrega, c.nome, c.bairro, c.rua, c.numero, c.complemento, c.fone
+			FROM pedidos p INNER JOIN cliente c ON (p.fk_idCliente = c.idCliente) WHERE DATE(data) = CURDATE();
+			*/
+			$this->connDataBase->query("SELECT DISTINCT p.idPedidos, p.fk_idCliente, p.status, p.data, p.tempoDeEntrega, c.nome, c.bairro, c.rua, c.numero, c.complemento, c.fone
+						FROM pedidos p INNER JOIN cliente c ON (p.fk_idCliente = c.idCliente)");
 			$rows = $this->connDataBase->resultset();
 			$json = json_encode($rows);
 			return $rows;
@@ -56,6 +60,20 @@ require_once 'model/conection.php';
 			$rows = $this->connDataBase->resultset();
 			$json = json_encode($rows);
 			return $rows;
+		}
+
+		function setInativoJSON($id)
+		{
+			$this->connDataBase->query('UPDATE item SET ativo=0 WHERE idItem = :idItem;');
+			$this->connDataBase->bind(':idItem', $id);
+			$this->connDataBase->execute();
+		}
+
+		function setAtivoJSON($id)
+		{
+			$this->connDataBase->query('UPDATE item SET ativo=1 WHERE idItem = :idItem;');
+			$this->connDataBase->bind(':idItem', $id);
+			$this->connDataBase->execute();
 		}
 
 	}
