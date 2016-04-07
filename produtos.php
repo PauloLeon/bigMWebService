@@ -8,16 +8,17 @@ include '../bigMWebService/model/conection.php';
 include ('../bigMWebService/model/User.php');
 $id = "1";
 $nome = "admin";
-$foda = new User($nome ,$id );
-$jsonItens= $foda->getItensJSON();
-debug_to_console($jsonItens);
-
+$user = new User($nome ,$id );
+$idProduto = "";
+//ativando ou desativando
 if (!empty($_POST['ativo'])) {
-		$foda->setAtivoJSON($_POST['id']);
+		$user->setAtivoJSON($_POST['idProduto']);
 }
 if (!empty($_POST['inativo'])) {
-		$foda->setInativoJSON($_POST['id']);
+		$user->setInativoJSON($_POST['idProduto']);
 }
+//obtendo lista de itens
+$jsonItens= $user->getItensJSON();
 
 
 function debug_to_console( $data )
@@ -115,14 +116,14 @@ function debug_to_console( $data )
                                     <div class="row">
                                         <div class="col-md-2"></div>
                                         <div class="col-md-8">
-                                            <div class="row hidden-xs ">
+                                            <div class="row -xs ">
                                                 <div class="col-xs-12 col-sm-6 col-md-6"></div>
                                                 <div class="col-xs-12 col-sm-6 col-md-6">
                                                     <h3 class="panel-title">
                                                         <div class="input-group pull-right" style="margin-bottom:20px;">
                                                             <input class="search pull-right" placeholder="Pesquisar" aria-describedby="basic-addon1" style="height: 30px;">
                                                                 <span class="input-group-addon " id="basic-addon1">
-                                                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                                    <span class="glyphicon glyphicon-search" aria-="true"></span>
                                                                 </span>
                                                             </div>
                                                         </h3>
@@ -132,7 +133,7 @@ function debug_to_console( $data )
                                                     <div class="form-group visible-xs">
                                                         <div class="input-group">
                                                             <span class="input-group-addon" id="basic-addon1">
-                                                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                                <span class="glyphicon glyphicon-search" aria-="true"></span>
                                                             </span>
                                                             <input class="search" placeholder="Pesquisar" aria-describedby="basic-addon1" style="height: 30px;">
                                                             </div>
@@ -189,17 +190,17 @@ function debug_to_console( $data )
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">×</span>
+                                                            <span aria-="true">×</span>
                                                         </button>
                                                         <h4 style="" class="modal-title">Produto no App</h4>
                                                     </div>
                                                     <div class="modal-body">
-																											<form class="form-horizontal" role="form" draggable="true"
-																					            action="produtos.php" method="post">
+																											<form class="form-horizontal" role="form" draggable="true" action="produtos.php" method="post">
                                                         <h9 style="color: red;" class="modal-title">Obs. Desativando esse produto os clientes não poderão pedir em seu celular o produto em questão.</h9>
+																												<input type="text" class="form-control" id="id" name="idProduto" value="<?=$idProduto;?>" style="visibility: hidden; height: 0px;padding: 0px;margin:0px;" />
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" name="inativo" value="Submit">Desativar</button>
+                                                        <button type="submit" class="btn btn-default" name="inativo" value="Submit">Desativar</button>
 																												<button type="submit" class="btn btn-default" name="ativo" value="Submit">Ativar</button>
                                                     </div>
 																									</form>
@@ -212,5 +213,5 @@ function debug_to_console( $data )
                                     </body>
                                 </html>
 <?php
-echo file_get_contents(dirname(__FILE__).'/adminScript.php', true);
+echo file_get_contents(dirname(__FILE__).'/ProdutosScript.php', true);
  ?>

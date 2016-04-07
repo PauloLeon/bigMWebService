@@ -8,8 +8,8 @@ include '../bigMWebService/model/conection.php';
 include ('../bigMWebService/model/User.php');
 $id = "1";
 $nome = "admin";
-$foda = new User($nome ,$id );
-$jsonPedidos = $foda->getPedidosJSON();
+$user = new User($nome ,$id );
+$jsonPedidos = $user->getPedidosJSON();
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -172,7 +172,41 @@ $jsonPedidos = $foda->getPedidosJSON();
 							      <th>Valor</th>
 							    </tr>
 							  </thead>
-							  <tbody>
+								<tbody>
+								<?php
+								//TEM QUE COLOCAR O ID NESTA POURRA
+								    $jsonItem = $user->getItemPedidoJSON();
+			              if (empty($jsonItem)) {
+											echo"<tr>
+														<th scope="row"> - </th>
+														<td>Pedido</td>
+														<td>Incompleto</td>
+														<td>NEGADO</td>
+													</tr>";
+			              }
+
+			              foreach ($jsonItem as $val) {
+												//para resolver o utf-8
+												$status = $val['status'];
+											  utf8_decode($status);
+												echo'<li
+			              				  id='.$val['idPedidos'].'
+			              				  cliente="'.$val['fk_idCliente'].'" class="list-group-item"  data-toggle="modal" data-target="#detalheModal" style="padding-top: 15px;padding-bottom: 15px;" >
+																	 <div class="pedidosSearch row">
+		 																<div class="col-xs-4 col-sm-4 col-md-4">'.$val['nome'].'</div>
+		 																<div class="col-xs-4 col-sm-4 col-md-4">'.$status.'</div>
+		 															<div class="col-xs-4 col-sm-4 col-md-4">'.$val['data'].'</div>
+		 													</div>
+			              				</li>';
+
+											echo"<tr>
+									      		<th scope="row">" .$val['idItem']. "</th>
+									      		<td>" .$val['nome']. "</td>
+									      		<td>Completo</td>
+									      		<td>" .$val['valor']. "</td>
+									    		</tr>";
+			              }
+			          ?>
 							    <tr>
 							      <th scope="row">1</th>
 							      <td>Big Leitão</td>

@@ -53,6 +53,22 @@ require_once 'model/conection.php';
 			return $rows;
 		}
 
+		function getItemPedidoJSON($fk_idPedidos)
+		{
+			/* SQL QUE SO RETORNA O DO DIA EM QUESTAO
+			SELECT DISTINCT p.idPedidos, p.fk_idCliente, p.status, p.data, p.tempoDeEntrega, c.nome, c.bairro, c.rua, c.numero, c.complemento, c.fone
+			FROM pedidos p INNER JOIN cliente c ON (p.fk_idCliente = c.idCliente) WHERE DATE(data) = CURDATE();
+			*/
+			$this->connDataBase->query("SELECT i.idItem, i.nome, i.descricao, i.valor, i.idCategoria, i.ativo, IP.fk_idPedidos
+																	FROM item i
+																	INNER JOIN itemPedido IP ON (i.idItem = IP.fk_idItem)
+																	WHERE fk_idPedidos = :fk_idPedidos ;");
+			$this->connDataBase->bind(':fk_idPedidos', $fk_idPedidos);
+			$rows = $this->connDataBase->resultset();
+			$json = json_encode($rows);
+			return $rows;
+		}
+
 		function getItensJSON()
 		{
 
