@@ -115,7 +115,15 @@ $jsonPedidos = $user->getPedidosJSON();
 											  utf8_decode($status);
 												echo'<li
 			              				  id='.$val['idPedidos'].'
-			              				  cliente="'.$val['fk_idCliente'].'" class="list-group-item"  data-toggle="modal" data-target="#detalheModal" style="padding-top: 15px;padding-bottom: 15px;" >
+			              				  cliente="'.$val['fk_idCliente'].'"
+															data="'.$val['data'].'"
+															rua="'.$val['rua'].'"
+															numero="'.$val['numero'].'"
+															complemento="'.$val['complemento'].'"
+															fone="'.$val['fone'].'"
+															status="'.$val['status'].'"
+															tempoDeEntrega="'.$val['tempoDeEntrega'].'"
+															class="list-group-item"  data-toggle="modal" data-target="#detalheModal" style="padding-top: 15px;padding-bottom: 15px;" >
 																	 <div class="pedidosSearch row">
 		 																<div class="col-xs-4 col-sm-4 col-md-4">'.$val['nome'].'</div>
 		 																<div class="col-xs-4 col-sm-4 col-md-4">'.$status.'</div>
@@ -168,67 +176,15 @@ $jsonPedidos = $user->getPedidosJSON();
 							    <tr>
 							      <th>#</th>
 							      <th>Produto</th>
-							      <th>Descrição</th>
+							      <th>Observação</th>
 							      <th>Valor</th>
 							    </tr>
 							  </thead>
-								<tbody>
-								<?php
-								//TEM QUE COLOCAR O ID NESTA POURRA
-								    $jsonItem = $user->getItemPedidoJSON();
-			              if (empty($jsonItem)) {
-											echo"<tr>
-														<th scope="row"> - </th>
-														<td>Pedido</td>
-														<td>Incompleto</td>
-														<td>NEGADO</td>
-													</tr>";
-			              }
-
-			              foreach ($jsonItem as $val) {
-												//para resolver o utf-8
-												$status = $val['status'];
-											  utf8_decode($status);
-												echo'<li
-			              				  id='.$val['idPedidos'].'
-			              				  cliente="'.$val['fk_idCliente'].'" class="list-group-item"  data-toggle="modal" data-target="#detalheModal" style="padding-top: 15px;padding-bottom: 15px;" >
-																	 <div class="pedidosSearch row">
-		 																<div class="col-xs-4 col-sm-4 col-md-4">'.$val['nome'].'</div>
-		 																<div class="col-xs-4 col-sm-4 col-md-4">'.$status.'</div>
-		 															<div class="col-xs-4 col-sm-4 col-md-4">'.$val['data'].'</div>
-		 													</div>
-			              				</li>';
-
-											echo"<tr>
-									      		<th scope="row">" .$val['idItem']. "</th>
-									      		<td>" .$val['nome']. "</td>
-									      		<td>Completo</td>
-									      		<td>" .$val['valor']. "</td>
-									    		</tr>";
-			              }
-			          ?>
-							    <tr>
-							      <th scope="row">1</th>
-							      <td>Big Leitão</td>
-							      <td>Completo</td>
-							      <td>R$15,00</td>
-							    </tr>
-							    <tr>
-							      <th scope="row">2</th>
-							      <td>Big Mengão</td>
-							      <td>Sem Salada</td>
-							      <td>R$12,00</td>
-							    </tr>
-							    <tr>
-							      <th scope="row">3</th>
-							      <td>Coca-Cola</td>
-							      <td>Zero</td>
-							      <td>R$5,00</td>
-							    </tr>
+								<tbody id="tbody">
 							  </tbody>
 							</table>
 							<div id="listStatus" class="thumbnail scrollable-menu" role="menu" style="background-color: #F2DEDE;">
-											<li id="2" class="list-group-item " style="margin-left: 30px;  margin-right: 30px;">
+											<li id="status1" class="list-group-item " style="margin-left: 30px;  margin-right: 30px;">
 												<div style="width: 66px;" class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-mini bootstrap-switch-id-my-checkbox bootstrap-switch-on bootstrap-switch-animate">
 													<div style="width: 96px; margin-left: 0px;" class="bootstrap-switch-container ">
 														<input id="my-checkbox" name="1" data-size="mini" data-on-text="Sim" data-off-text="Não" data-animate="true" unchecked type="checkbox">
@@ -236,7 +192,7 @@ $jsonPedidos = $user->getPedidosJSON();
 												</div>
 												&nbsp;Aguardando Aprovação
 											</li>
-											<li id="3" class="list-group-item " style="margin-left: 30px;  margin-right: 30px;">
+											<li id="status2" class="list-group-item " style="margin-left: 30px;  margin-right: 30px;">
 												<div style="width: 66px;" class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-mini bootstrap-switch-id-my-checkbox bootstrap-switch-on bootstrap-switch-animate">
 													<div style="width: 96px; margin-left: 0px;" class="bootstrap-switch-container ">
 														<input id="my-checkbox" name="2" data-size="mini" data-on-text="Sim" data-off-text="Não" data-animate="true" unchecked type="checkbox">
@@ -244,7 +200,7 @@ $jsonPedidos = $user->getPedidosJSON();
 												</div>
 												&nbsp;Aprovado
 										 </li>
-										 <li id="4" class="list-group-item " style="margin-left: 30px;  margin-right: 30px;">
+										 <li id="status3" class="list-group-item " style="margin-left: 30px;  margin-right: 30px;">
 												<div style="width: 66px;" class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-mini bootstrap-switch-id-my-checkbox bootstrap-switch-on bootstrap-switch-animate">
 													<div style="width: 96px; margin-left: 0px;" class="bootstrap-switch-container ">
 														<input id="my-checkbox" name="3" data-size="mini" data-on-text="Sim" data-off-text="Não" data-animate="true" unchecked type="checkbox">
@@ -252,7 +208,7 @@ $jsonPedidos = $user->getPedidosJSON();
 												</div>
 												&nbsp;Pedido em Produção
 										</li>
-										<li id="5" class="list-group-item " style="margin-left: 30px;  margin-right: 30px;">
+										<li id="status4" class="list-group-item " style="margin-left: 30px;  margin-right: 30px;">
 												<div style="width: 66px;" class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-mini bootstrap-switch-id-my-checkbox bootstrap-switch-on bootstrap-switch-animate">
 													<div style="width: 96px; margin-left: 0px;" class="bootstrap-switch-container ">
 														<input id="my-checkbox" name="4" data-size="mini" data-on-text="Sim" data-off-text="Não" data-animate="true" unchecked type="checkbox">
@@ -260,7 +216,7 @@ $jsonPedidos = $user->getPedidosJSON();
 												</div>
 												&nbsp;Pronto para Entrega
 								    </li>
-									  <li id="6" class="list-group-item " style="margin-left: 30px;  margin-right: 30px;">
+									  <li id="status5" class="list-group-item " style="margin-left: 30px;  margin-right: 30px;">
 												<div style="width: 66px;" class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-mini bootstrap-switch-id-my-checkbox bootstrap-switch-on bootstrap-switch-animate">
 													<div style="width: 96px; margin-left: 0px;" class="bootstrap-switch-container ">
 														<input id="my-checkbox" name="5" data-size="mini" data-on-text="Sim" data-off-text="Não" data-animate="true" unchecked type="checkbox">
