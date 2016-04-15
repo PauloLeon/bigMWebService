@@ -14,6 +14,7 @@
 
     //definindo os id's do checkbox
     $("[id='my-checkbox']").bootstrapSwitch();
+    $("[id='my-checkbox']").bootstrapSwitch('radioAllOff','true');
     $("[name='checkLancamento']").bootstrapSwitch();
     $("[name='checkLancamento']").bootstrapSwitch('size','mini'	);
     $("[name='checkLancamento']").bootstrapSwitch('onText','Disciplina');
@@ -21,10 +22,14 @@
     $("[name='checkLancamento']").bootstrapSwitch('offColor','primary');
     $("[name='checkLancamento']").bootstrapSwitch('onColor','success');
 
+
 		$("#listPedidos li").click(function() {
        //add cliente ao card
-        var cliente = $(this).attr('cliente');
+        var cliente = $(this).attr('nome');
         $("[id='clienteLabel']").val(jQuery.trim(cliente));
+        //add fone ao card
+         var fone = $(this).attr('fone');
+         $("[id='foneLabel']").val(jQuery.trim(fone));
         //add endereco ao card
          var rua = $(this).attr('rua');
          var bairro = $(this).attr('bairro');
@@ -43,6 +48,7 @@
           $("#listStatus input[name|="+name+"]").bootstrapSwitch('state', true);
           //add pedidos ao card
           var idPedido = $(this).attr('id');
+          $("[id='pedidoInput']").val(jQuery.trim(idPedido));
           buscaItemPedido(idPedido);
 
         //var auxId = $(this).attr('id');
@@ -52,29 +58,45 @@
 
     $("#listStatus li").click(function() {
       console.log($('this').prop('id'));
+
 		});
 
     function idStatus(status)
     {
       if (status = "Aguardando Aprovação") {
+        for (var i = 3; i <= 5; i++) {
+          $("#listStatus input[name|="+i+"]").bootstrapSwitch('readonly', true);
+        }
         var name = 1;
         return name;
       }else if(status = "Aprovado"){
+        $("#listStatus input[name|="+1+"]").bootstrapSwitch('readonly', true);
+        $("#listStatus input[name|="+4+"]").bootstrapSwitch('readonly', true);
+        $("#listStatus input[name|="+5+"]").bootstrapSwitch('readonly', true);
         var name = 2;
         return name;
       }else if(status = "Pedido em Produção"){
+        $("#listStatus input[name|="+1+"]").bootstrapSwitch('readonly', true);
+        $("#listStatus input[name|="+2+"]").bootstrapSwitch('readonly', true);
+        $("#listStatus input[name|="+5+"]").bootstrapSwitch('readonly', true);
         var name = 3;
         return name;
       }else if(status = "Pronto para Entrega"){
+        for (var i = 1; i <= 3; i++) {
+          $("#listStatus input[name|="+i+"]").bootstrapSwitch('readonly', true);
+        }
         var name = 4;
         return name;
       }else if(status = "Finalizado"){
+        for (var i = 1; i <= 3; i++) {
+          $("#listStatus input[name|="+i+"]").bootstrapSwitch('readonly', true);
+        }
         var name = 5;
         return name;
       }
     }
 
-    function buscaItemPedido(idPedido) {
+    function buscaItemPedido(idPedido,trocoPara,metodoDePagamento) {
         if (idPedido == "") {
             document.getElementById("txtHint").innerHTML = "";
             return;
@@ -91,7 +113,7 @@
                    document.getElementById("tbody").innerHTML = xmlhttp.responseText;
                 }
             }
-            xmlhttp.open("GET","getItemPedido.php?q="+idPedido,true);
+            xmlhttp.open("GET","getItemPedido.php?q="+idPedido+"&trocoPara="+trocoPara+"&metodoDePagamento="+metodoDePagamento,true);
             xmlhttp.send();
         }
     }

@@ -9,7 +9,28 @@ include ('../bigMWebService/model/User.php');
 $id = "1";
 $nome = "admin";
 $user = new User($nome ,$id );
+$inputPedido = "";
+if (!empty($_POST['confirmar'])) {
+	debug_to_console("confirmar");
+	debug_to_console($_POST['inputPedido']);
+		$user->confimarPedido($_POST['inputPedido']);
+}
+
+if (!empty($_POST['rejeitar'])) {
+	  debug_to_console("rejeitar");
+		debug_to_console($_POST['inputPedido']);
+		$user->rejeitarPedido($_POST['inputPedido']);
+}
 $jsonPedidos = $user->getPedidosJSON();
+
+function debug_to_console( $data )
+{
+		 if ( is_array( $data ) )
+				 $output = "<script>console.log( 'Debug Objects: " . implode( ',', $data) . "' );</script>";
+		 else
+				$output = "<script>console.log( 'Debug Objects: " . $data . "' );</script>";
+		 echo $output;
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -113,23 +134,66 @@ $jsonPedidos = $user->getPedidosJSON();
 												//para resolver o utf-8
 												$status = $val['status'];
 											  utf8_decode($status);
-												echo'<li
-			              				  id='.$val['idPedidos'].'
-			              				  cliente="'.$val['fk_idCliente'].'"
-															data="'.$val['data'].'"
-															rua="'.$val['rua'].'"
-															numero="'.$val['numero'].'"
-															complemento="'.$val['complemento'].'"
-															fone="'.$val['fone'].'"
-															status="'.$val['status'].'"
-															tempoDeEntrega="'.$val['tempoDeEntrega'].'"
-															class="list-group-item"  data-toggle="modal" data-target="#detalheModal" style="padding-top: 15px;padding-bottom: 15px;" >
-																	 <div class="pedidosSearch row">
-		 																<div class="col-xs-4 col-sm-4 col-md-4">'.$val['nome'].'</div>
-		 																<div class="col-xs-4 col-sm-4 col-md-4">'.$status.'</div>
-		 															<div class="col-xs-4 col-sm-4 col-md-4">'.$val['data'].'</div>
-		 													</div>
-			              				</li>';
+												if ($status == "Aprovado") {
+													echo'<li
+				              				  id='.$val['idPedidos'].'
+				              				  cliente="'.$val['fk_idCliente'].'"
+																data="'.$val['data'].'"
+																rua="'.$val['rua'].'"
+																numero="'.$val['numero'].'"
+																complemento="'.$val['complemento'].'"
+																fone="'.$val['fone'].'"
+																status="'.$val['status'].'"
+																nome="'.$val['nome'].'"
+																tempoDeEntrega="'.$val['tempoDeEntrega'].'"
+																class="list-group-item"  data-toggle="modal" data-target="#detalheModal" style="padding-top: 15px;padding-bottom: 15px;" >
+																		 <div class="pedidosSearch row">
+			 																<div class="col-xs-4 col-sm-4 col-md-4">'.$val['nome'].'</div>
+			 																<div style="color: blue;" class="col-xs-4 col-sm-4 col-md-4">'.$status.'</div>
+			 															<div class="col-xs-4 col-sm-4 col-md-4">'.$val['data'].'</div>
+			 													</div>
+				              				</li>';
+												} else 	if ($status == "Rejeitado"){
+													echo'<li
+				              				  id='.$val['idPedidos'].'
+				              				  cliente="'.$val['fk_idCliente'].'"
+																data="'.$val['data'].'"
+																rua="'.$val['rua'].'"
+																numero="'.$val['numero'].'"
+																complemento="'.$val['complemento'].'"
+																fone="'.$val['fone'].'"
+																status="'.$val['status'].'"
+																nome="'.$val['nome'].'"
+																tempoDeEntrega="'.$val['tempoDeEntrega'].'"
+																class="list-group-item"  data-toggle="modal" data-target="#detalheModal" style="padding-top: 15px;padding-bottom: 15px;" >
+																		 <div class="pedidosSearch row">
+			 																<div class="col-xs-4 col-sm-4 col-md-4">'.$val['nome'].'</div>
+			 																<div style="color: red;" class="col-xs-4 col-sm-4 col-md-4">'.$status.'</div>
+			 															<div class="col-xs-4 col-sm-4 col-md-4">'.$val['data'].'</div>
+			 													</div>
+				              				</li>';
+												} else {
+													echo'<li
+				              				  id='.$val['idPedidos'].'
+				              				  cliente="'.$val['fk_idCliente'].'"
+																data="'.$val['data'].'"
+																rua="'.$val['rua'].'"
+																numero="'.$val['numero'].'"
+																complemento="'.$val['complemento'].'"
+																fone="'.$val['fone'].'"
+																status="'.$val['status'].'"
+																nome="'.$val['nome'].'"
+																tempoDeEntrega="'.$val['tempoDeEntrega'].'"
+																class="list-group-item"  data-toggle="modal" data-target="#detalheModal" style="padding-top: 15px;padding-bottom: 15px;" >
+																		 <div class="pedidosSearch row">
+			 																<div class="col-xs-4 col-sm-4 col-md-4">'.$val['nome'].'</div>
+			 																<div style="color: gray;" class="col-xs-4 col-sm-4 col-md-4">'.$status.'</div>
+			 															<div class="col-xs-4 col-sm-4 col-md-4">'.$val['data'].'</div>
+			 													</div>
+				              				</li>';
+												}
+
+
 			              }
 			          ?>
 							</ul>
@@ -143,25 +207,30 @@ $jsonPedidos = $user->getPedidosJSON();
 			<div class="modal fade" id="detalheModal">
 			  <div class="modal-dialog">
 			    <div class="modal-content">
+						<form style="padding: 10px;"  class="form-horizontal" role="form" draggable="true" action="admin.php" method="post">
 			      <div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			        <h4 class="modal-title">Pedido Detalhado</h4>
 			      </div>
 			      <div class="modal-body">
 							<div class="form-group">
+			          <input class="form-control" id="pedidoInput" style="height: 0px;padding: 0px;margin:0px;
+						    visibility: hidden;"type="text" name="inputPedido" value="<?=$varPedido;?>">
+			        </div>
+							<div class="form-group">
 			          <label class="control-label" for="clienteLabel">Cliente</label>
 			          <input class="form-control" id="clienteLabel" placeholder="Cliente"
 			               type="text" name="inputCliente" value="<?=$varCliente;?>">
 			        </div>
 							<div class="form-group">
+			          <label class="control-label" for="foneLabel">Telefone</label>
+			          <input class="form-control" id="foneLabel" placeholder="Fone"
+			               type="text" name="inputFone" value="<?=$varClienteTelefone;?>">
+			        </div>
+							<div class="form-group">
 			          <label class="control-label" for="enderecoLabel">Endereco</label>
 			          <input class="form-control" id="enderecoLabel" placeholder="Cliente"
 			               type="text" name="inputEndereco" value="<?=$varClienteEndereco;?>">
-			        </div>
-			        <div class="form-group">
-			          <label class="control-label" for="dataLabel">Data</label>
-			          <input class="form-control" id="dataLabel" placeholder="Data"
-			               type="date" name="inputData"	value="<?=$varData;?>">
 			        </div>
 							<div class="form-group">
 			          <label class="control-label" for="tempoLabel">Tempo de Entrega</label>
@@ -183,54 +252,12 @@ $jsonPedidos = $user->getPedidosJSON();
 								<tbody id="tbody">
 							  </tbody>
 							</table>
-							<div id="listStatus" class="thumbnail scrollable-menu" role="menu" style="background-color: #F2DEDE;">
-											<li id="status1" class="list-group-item " style="margin-left: 30px;  margin-right: 30px;">
-												<div style="width: 66px;" class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-mini bootstrap-switch-id-my-checkbox bootstrap-switch-on bootstrap-switch-animate">
-													<div style="width: 96px; margin-left: 0px;" class="bootstrap-switch-container ">
-														<input id="my-checkbox" name="1" data-size="mini" data-on-text="Sim" data-off-text="Não" data-animate="true" unchecked type="checkbox">
-													</div>
-												</div>
-												&nbsp;Aguardando Aprovação
-											</li>
-											<li id="status2" class="list-group-item " style="margin-left: 30px;  margin-right: 30px;">
-												<div style="width: 66px;" class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-mini bootstrap-switch-id-my-checkbox bootstrap-switch-on bootstrap-switch-animate">
-													<div style="width: 96px; margin-left: 0px;" class="bootstrap-switch-container ">
-														<input id="my-checkbox" name="2" data-size="mini" data-on-text="Sim" data-off-text="Não" data-animate="true" unchecked type="checkbox">
-													</div>
-												</div>
-												&nbsp;Aprovado
-										 </li>
-										 <li id="status3" class="list-group-item " style="margin-left: 30px;  margin-right: 30px;">
-												<div style="width: 66px;" class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-mini bootstrap-switch-id-my-checkbox bootstrap-switch-on bootstrap-switch-animate">
-													<div style="width: 96px; margin-left: 0px;" class="bootstrap-switch-container ">
-														<input id="my-checkbox" name="3" data-size="mini" data-on-text="Sim" data-off-text="Não" data-animate="true" unchecked type="checkbox">
-													</div>
-												</div>
-												&nbsp;Pedido em Produção
-										</li>
-										<li id="status4" class="list-group-item " style="margin-left: 30px;  margin-right: 30px;">
-												<div style="width: 66px;" class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-mini bootstrap-switch-id-my-checkbox bootstrap-switch-on bootstrap-switch-animate">
-													<div style="width: 96px; margin-left: 0px;" class="bootstrap-switch-container ">
-														<input id="my-checkbox" name="4" data-size="mini" data-on-text="Sim" data-off-text="Não" data-animate="true" unchecked type="checkbox">
-													</div>
-												</div>
-												&nbsp;Pronto para Entrega
-								    </li>
-									  <li id="status5" class="list-group-item " style="margin-left: 30px;  margin-right: 30px;">
-												<div style="width: 66px;" class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-mini bootstrap-switch-id-my-checkbox bootstrap-switch-on bootstrap-switch-animate">
-													<div style="width: 96px; margin-left: 0px;" class="bootstrap-switch-container ">
-														<input id="my-checkbox" name="5" data-size="mini" data-on-text="Sim" data-off-text="Não" data-animate="true" unchecked type="checkbox">
-													</div>
-												</div>
-												&nbsp;Finalizado
-										</li>
-						</div>
 			      </div>
 			      <div class="modal-footer">
 							<div class="form-group">
-			          <label class="control-label" for="tempoLabel" style="color:#AD3232">Troco para R$50,00</label>
 			        </div>
-							<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+							<button type="submit" name="confirmar" value="Submit"class="btn btn-primary" >Confirmar Pedido</button>
+							<button type="submit" name="rejeitar" value="Submit" class="btn btn-default" >Rejeitar Pedido</button>
 			      </div>
 			      </form>
 			    </div><!-- /.modal-content -->

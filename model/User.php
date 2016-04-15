@@ -37,7 +37,7 @@ require_once 'model/conection.php';
 			SELECT DISTINCT p.idPedidos, p.fk_idCliente, p.status, p.data, p.tempoDeEntrega, c.nome, c.bairro, c.rua, c.numero, c.complemento, c.fone
 			FROM pedidos p INNER JOIN cliente c ON (p.fk_idCliente = c.idCliente) WHERE DATE(data) = CURDATE();
 			*/
-			$this->connDataBase->query("SELECT DISTINCT p.idPedidos, p.fk_idCliente, p.status, p.data, p.tempoDeEntrega, c.nome, c.bairro, c.rua, c.numero, c.complemento, c.fone
+			$this->connDataBase->query("SELECT DISTINCT p.idPedidos, p.fk_idCliente, p.status, DATE_FORMAT(p.data,'%d %b %Y %T') as data , p.tempoDeEntrega, c.nome, c.bairro, c.rua, c.numero, c.complemento, c.fone
 						FROM pedidos p INNER JOIN cliente c ON (p.fk_idCliente = c.idCliente)");
 			$rows = $this->connDataBase->resultset();
 			$json = json_encode($rows);
@@ -83,6 +83,30 @@ require_once 'model/conection.php';
 			$this->connDataBase->execute();
 		}
 
+		function confimarPedido($id)
+		{
+			$this->connDataBase->query('UPDATE Pedidos SET status="Aprovado" WHERE idPedidos = :idPedidos;');
+			$this->connDataBase->bind(':idPedidos', $id);
+			$this->connDataBase->execute();
+		}
+
+		function rejeitarPedido($id)
+		{
+			$this->connDataBase->query('UPDATE Pedidos SET status="Rejeitado" WHERE idPedidos = :idPedidos;');
+			$this->connDataBase->bind(':idPedidos', $id);
+			$this->connDataBase->execute();
+		}
+
+		function debug_to_console( $data )
+		{
+				 if ( is_array( $data ) )
+						 $output = "<script>console.log( 'Debug Objects: " . implode( ',', $data) . "' );</script>";
+				 else
+						$output = "<script>console.log( 'Debug Objects: " . $data . "' );</script>";
+				 echo $output;
+		}
+
 	}
+
 
 ?>
