@@ -101,6 +101,7 @@ require_once 'model/conection.php';
 
 		}
 
+
 		function editarProduto($idItem, $nome, $descricao, $valor)
 		{
 			$this->connDataBase->query('UPDATE item
@@ -110,6 +111,36 @@ require_once 'model/conection.php';
 			$this->connDataBase->bind(':nome', $nome);
 			$this->connDataBase->bind(':descricao', $descricao);
 			$this->connDataBase->bind(':valor', $valor);
+			$this->connDataBase->execute();
+		}
+
+		function addCategoria( $descricaoCategoria)
+		{
+
+			$this->connDataBase->query('INSERT INTO Categoria ( nome, ativo)
+																	VALUES (:descricaoCategoria, :ativo);');
+			$this->connDataBase->bind(':descricaoCategoria', $descricaoCategoria);
+			$this->connDataBase->bind(':ativo', 1);
+			$this->connDataBase->execute();
+
+		}
+
+		function excluirCategoria($idCategoria)
+		{
+
+			$this->connDataBase->query("DELETE FROM categoria WHERE idCategoria = :idCategoria;");
+			$this->connDataBase->bind(':idCategoria', $idCategoria);
+			$this->connDataBase->execute();
+
+		}
+
+		function editarCategoria($idCategoria, $descricaoCategoria)
+		{
+			$this->connDataBase->query('UPDATE categoria
+																	SET  nome=:descricaoCategoria
+																	WHERE idCategoria=:idCategoria;');
+			$this->connDataBase->bind(':idCategoria', $idCategoria);
+			$this->connDataBase->bind(':descricaoCategoria', $descricaoCategoria);
 			$this->connDataBase->execute();
 		}
 

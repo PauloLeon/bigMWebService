@@ -26,6 +26,15 @@ if (!empty($_POST['excluir'])) {
 if (!empty($_POST['editar'])) {
 		$user->editarProduto($_POST['idProduto'],$_POST['nomeProduto'],$_POST['descricao'],$_POST['valor']);
 }
+if (!empty($_POST['submitNewCategoria'])) {
+		$user->addCategoria($_POST['categoriaInputAdd']);
+}
+if (!empty($_POST['excluirCategoria'])) {
+		$user->excluirCategoria($_POST['idCategoriaAdd']);
+}
+if (!empty($_POST['editarCategoria'])) {
+		$user->editarCategoria($_POST['idCategoriaAdd'],$_POST['categoriaInputAdd']);
+}
 //obtendo lista de itens
 $jsonItens= $user->getItensJSON();
 $jsonCategoria= $user->getCategoriaJSON();
@@ -119,10 +128,14 @@ function debug_to_console( $data )
                                     </div>
                                 </nav>
                                 <div class="col-md-2"></div>
-                                <div class="col-md-8">
+                                <div class="col-md-6">
                                     <h3 class="page-header" style="margin-top: 20px;">Área de Produtos</h3>
                                 </div>
-                                <div class="col-md-2"></div>
+                                <div class="col-md-4">
+																	<div class="form-group">
+																		<button class="btn btn-success" data-toggle="modal" data-target="#categoriaModal" name="categoriaIncluir"  value="submit_insert"><span class="glyphicon glyphicon-plus"></span>Nova Categoria</button>
+																	</div>
+																</div>
                                 <div class="col-lg-12" id="admin">
                                     <div class="row">
                                         <div class="col-md-2"></div>
@@ -131,7 +144,7 @@ function debug_to_console( $data )
                                                 <div class="col-xs-12 col-sm-6 col-md-6">
 																									<h3 class="panel-title">
 																										<div class="form-group">
-																											<button class="btn btn-success" data-toggle="modal" data-target="#incluirModal" name="incluir" onClick="incluirOnClick()" value="submit_insert"><span class="glyphicon glyphicon-plus"></span>Novo Produto</button>
+																											<button class="btn btn-success" data-toggle="modal" data-target="#incluirModal" name="incluir" value="submit_insert"><span class="glyphicon glyphicon-plus"></span>Novo Produto</button>
 																										</div>
 																									</h3>
 																								</div>
@@ -329,6 +342,60 @@ function debug_to_console( $data )
 																										</div>
 																										<div class="modal-footer">
 																												<button type="submit" class="btn btn-primary" id="submitNewProduto" name="submitNewProduto" value="Submit">Adicionar</button>
+																										</div>
+																									</form>
+																								</div>
+																								<!-- /.modal-content -->
+																						</div>
+																						<!-- /.modal-dialog -->
+																				</div>
+																				<!-- /.modal -->
+
+
+																				<!--MODAL incluir Categoria -Card -->
+																				<div style="display: none;" class="modal fade" id="categoriaModal">
+																						<div class="modal-dialog">
+																								<div class="modal-content">
+																										<div class="modal-header">
+																												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																														<span aria-="true">×</span>
+																												</button>
+																												<h4 style="" class="modal-title">Categoria no App</h4>
+																										</div>
+																										<div class="modal-body">
+																											<form class="form-horizontal" role="form" draggable="true" action="produtos.php" method="post">
+																												<input type="text" class="form-control" id="idCategoriaAdd" name="idCategoriaAdd" value="<?=$idCategoriaAdd;?>" style="visibility: hidden; height: 0px;padding: 0px;margin:0px;" />
+																												<!-- Categoria Drop Down-->
+																												<div class="form-group">
+																													<label class="col-md-3 control-label" for="buttondropdown">Categoria</label>
+																													<div class="col-md-8">
+																														<div class="input-group">
+																															<input id="categoriaInputAdd" name="categoriaInputAdd" class="form-control" placeholder="" required="" type="text" value=" <?=$descricaoCategoria;?>">
+																															<div class="input-group-btn">
+																																<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+																																	Selecione
+																																	<span class="caret"></span>
+																																</button>
+																																<ul id="categoriaListAdd" class="dropdown-menu pull-right">
+																																	<?php
+																																		 if (empty($jsonCategoria)) {
+																																				 echo'<li class="list-group-item">'.'Ops! Alguma coisa aconteceu, você está sem produtos cadastrados no sistema.'.'</li>';
+																																		 }
+
+																																		 foreach ($jsonCategoria as $val) {
+																																					echo '<li ><a id='.$val['idCategoria'].' href="#">'.$val['nome'].'</a></li>';
+																																		 }
+																																 ?>
+																																</ul>
+																															</div>
+																														</div>
+																													</div>
+																												</div>
+																										</div>
+																										<div class="modal-footer">
+																												<button type="submit" class="btn btn-danger" id="excluirCategoria" name="excluirCategoria" value="Submit">excluir</button>
+																											<button type="submit" class="btn btn-warning" id="editarCategoria" name="editarCategoria" value="Submit">editar</button>
+																												<button type="submit" class="btn btn-primary" id="submitNewCategoria" name="submitNewCategoria" value="Submit">Adicionar</button>
 																										</div>
 																									</form>
 																								</div>

@@ -33,6 +33,14 @@
       $("#submitNewProduto").click(function() {
         $("#categoriaInput").prop("disabled", false);
       });
+
+        $("#categoriaListAdd a").click(function() {
+      	  var categoria = $(this).html();// get nome
+          var idCategoria = $(this).attr('id');// get nome
+          $("#idCategoriaAdd").val(idCategoria);
+      		$("#categoriaInputAdd").val(categoria);
+        });
+
 /*
     //para quando o modal abrir
     $('#detalheModal').on('show.bs.modal', function (e)
