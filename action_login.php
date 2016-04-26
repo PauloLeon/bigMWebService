@@ -27,10 +27,13 @@ if(empty($errorMessage))
     $database = new Database();
 
     //retornando do banco
-    $database->query('SELECT idUsuario, nome, senha FROM usuario WHERE nome = :nome AND senha = :senha');
+    $database->query('SELECT id, nome, senha FROM usuario WHERE nome = :nome AND senha = :senha');
     $database->bind(':nome', $login, PDO::PARAM_STR);
     $database->bind(':senha', $senha, PDO::PARAM_STR);
+        debug_to_console("indo");
     $row = $database->single();
+
+
     if (empty($row)) {
       # code...
        debug_to_console("não achou nada");

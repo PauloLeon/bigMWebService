@@ -38,7 +38,7 @@ require_once 'model/conection.php';
 			FROM pedidos p INNER JOIN cliente c ON (p.fk_idCliente = c.idCliente) WHERE DATE(data) = CURDATE();
 			*/
 			$this->connDataBase->query("SELECT DISTINCT p.idPedidos, p.fk_idCliente, p.status, DATE_FORMAT(p.data,'%d %b %Y %T') as data , p.tempoDeEntrega, c.nome, c.bairro, c.rua, c.numero, c.complemento, c.fone
-						FROM pedidos p INNER JOIN cliente c ON (p.fk_idCliente = c.idCliente)");
+						FROM pedidos p INNER JOIN cliente c ON (p.fk_idCliente = c.id)");
 			$rows = $this->connDataBase->resultset();
 			$json = json_encode($rows);
 			return $rows;
@@ -63,7 +63,7 @@ require_once 'model/conection.php';
 		function getItensJSON()
 		{
 
-			$this->connDataBase->query('SELECT * FROM item');
+			$this->connDataBase->query('SELECT DISTINCT i.idItem, i.nome, i.descricao, i.valor, i.idCategoria, i.ativo, c.nome as categoria	FROM item i INNER JOIN categoria c ON (i.idCategoria = c.idCategoria);');
 			$rows = $this->connDataBase->resultset();
 			$json = json_encode($rows);
 			return $rows;

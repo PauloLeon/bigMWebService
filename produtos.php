@@ -117,7 +117,13 @@ function debug_to_console( $data )
                                         <div class="col-md-2"></div>
                                         <div class="col-md-8">
                                             <div class="row -xs ">
-                                                <div class="col-xs-12 col-sm-6 col-md-6"></div>
+                                                <div class="col-xs-12 col-sm-6 col-md-6">
+																									<h3 class="panel-title">
+																										<div class="form-group">
+																											<button class="btn btn-success" data-toggle="modal" data-target="#incluirModal" name="incluir" onClick="incluirOnClick()" value="submit_insert"><span class="glyphicon glyphicon-plus"></span>Novo Produto</button>
+																										</div>
+																									</h3>
+																								</div>
                                                 <div class="col-xs-12 col-sm-6 col-md-6">
                                                     <h3 class="panel-title">
                                                         <div class="input-group pull-right" style="margin-bottom:20px;">
@@ -159,7 +165,11 @@ function debug_to_console( $data )
 																																		 $ativo = $val['ativo'];
 																																		 if ($ativo==1) {
 																																		 	$ativo = "Disponível";
-																																			echo'<li id='.$val['idItem'].' class="list-group-item"  data-toggle="modal" data-target="#detalheModal" style="padding-top: 15px;padding-bottom: 15px;" >
+																																			echo'<li id='.$val['idItem'].'
+																																			 				nome="'.$val['nome'].'"
+																																							descricao="'.$val['descricao'].'"
+																																							valor="'.$val['valor'].'"
+																																							categoria="'.$val['categoria'].'" class="list-group-item"  data-toggle="modal" data-target="#detalheModal" style="padding-top: 15px;padding-bottom: 15px;" >
  																																						 <div class="pedidosSearch row">
  																																								 <div class="col-xs-4 col-sm-4 col-md-4">'.$val['nome'].'</div>
  																																								 <div style="color: blue;" class="col-xs-4 col-sm-4 col-md-4">'.$ativo.'</div>
@@ -167,7 +177,11 @@ function debug_to_console( $data )
  																																				 </li>';
 																																		 } else {
 																																		 	$ativo = "Indisponível";
-																																			echo'<li id='.$val['idItem'].' class="list-group-item"  data-toggle="modal" data-target="#detalheModal" style="padding-top: 15px;padding-bottom: 15px;" >
+																																			echo'<li id='.$val['idItem'].'
+																																								nome="'.$val['nome'].'"
+																																								descricao="'.$val['descricao'].'"
+																																								valor="'.$val['valor'].'"
+																																								categoria="'.$val['categoria'].'"  class="list-group-item"  data-toggle="modal" data-target="#detalheModal" style="padding-top: 15px;padding-bottom: 15px;" >
  																																						 <div class="pedidosSearch row">
  																																								 <div class="col-xs-4 col-sm-4 col-md-4">'.$val['nome'].'</div>
  																																								 <div style="color: red;" class="col-xs-4 col-sm-4 col-md-4">'.$ativo.'</div>
@@ -198,10 +212,33 @@ function debug_to_console( $data )
 																											<form class="form-horizontal" role="form" draggable="true" action="produtos.php" method="post">
                                                         <h9 style="color: red;" class="modal-title">Obs. Desativando esse produto os clientes não poderão pedir em seu celular o produto em questão.</h9>
 																												<input type="text" class="form-control" id="id" name="idProduto" value="<?=$idProduto;?>" style="visibility: hidden; height: 0px;padding: 0px;margin:0px;" />
+																												<!-- nome -->
+																											  <div class="form-group">
+																											    <label class="col-md-3 control-label" for="nome">Nome</label>
+																											    <div class="col-md-8">
+																											    <input id="nome" name="nome" class="form-control input-md" required="" type="text" value=" <?=$nomeProduto;?>">
+																											    </div>
+																											  </div>
+																												<!-- Descrição -->
+																											  <div class="form-group">
+																											    <label class="col-md-3 control-label" for="nome">Descrição</label>
+																											    <div class="col-md-8">
+																											    <input id="descricao" name="descricao" class="form-control input-md" required="" type="text" value=" <?=$descricao;?>">
+																											    </div>
+																											  </div>
+																												<!-- valor -->
+																											  <div class="form-group">
+																											    <label class="col-md-3 control-label" for="nome">Valor</label>
+																											    <div class="col-md-8">
+																											    <input id="valor" name="valor" class="form-control input-md" required="" type="text" value=" <?=$valor;?>">
+																											    </div>
+																											  </div>
                                                     </div>
                                                     <div class="modal-footer">
+																											  <button type="submit" class="btn btn-danger" name="inativo" value="Submit">Excluir</button>
+																												<button type="editar" class="btn btn-warning" name="inativo" value="Submit">Editar</button>
                                                         <button type="submit" class="btn btn-default" name="inativo" value="Submit">Desativar</button>
-																												<button type="submit" class="btn btn-default" name="ativo" value="Submit">Ativar</button>
+																												<button type="submit" class="btn btn-primary" name="ativo" value="Submit">Ativar</button>
                                                     </div>
 																									</form>
                                                 </div>
@@ -210,6 +247,51 @@ function debug_to_console( $data )
                                             <!-- /.modal-dialog -->
                                         </div>
                                         <!-- /.modal -->
+
+																				<!--MODAL incluir -Card -->
+																				<div style="display: none;" class="modal fade" id="incluirModal">
+																						<div class="modal-dialog">
+																								<div class="modal-content">
+																										<div class="modal-header">
+																												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																														<span aria-="true">×</span>
+																												</button>
+																												<h4 style="" class="modal-title">Produto no App</h4>
+																										</div>
+																										<div class="modal-body">
+																											<form class="form-horizontal" role="form" draggable="true" action="produtos.php" method="post">
+																												<!-- nome -->
+																												<div class="form-group">
+																													<label class="col-md-3 control-label" for="nome">Nome</label>
+																													<div class="col-md-8">
+																													<input id="nome" name="nome" class="form-control input-md" required="" type="text" value=" <?=$nomeProduto;?>">
+																													</div>
+																												</div>
+																												<!-- Descrição -->
+																												<div class="form-group">
+																													<label class="col-md-3 control-label" for="nome">Descrição</label>
+																													<div class="col-md-8">
+																													<input id="descricao" name="descricao" class="form-control input-md" required="" type="text" value=" <?=$descricao;?>">
+																													</div>
+																												</div>
+																												<!-- valor -->
+																												<div class="form-group">
+																													<label class="col-md-3 control-label" for="nome">Valor</label>
+																													<div class="col-md-8">
+																													<input id="valor" name="valor" class="form-control input-md" required="" type="text" value=" <?=$valor;?>">
+																													</div>
+																												</div>
+																										</div>
+																										<div class="modal-footer">
+																												<button type="submitNewProduto" class="btn btn-primary" name="ativo" value="Submit">Adicionar</button>
+																										</div>
+																									</form>
+																								</div>
+																								<!-- /.modal-content -->
+																						</div>
+																						<!-- /.modal-dialog -->
+																				</div>
+																				<!-- /.modal -->
                                     </body>
                                 </html>
 <?php

@@ -1,6 +1,8 @@
 <script src"/bigMWebService/js/jquery-2.2.1.min.js"></script>
 <script src="js/bootstrap-switch.js"></script>
 <script src="/bigMWebService/js/list.js"></script>
+<script  src="/bigMWebService/js/jquery.maskedinput.min.js"></script>
+
 
 
 
@@ -11,6 +13,9 @@
         console.log($(this).attr('id'));
         $('#id').attr('value',$(this).attr('id'));
         console.log($('#id').attr('value'));
+        $('#nome').attr('value',$(this).attr('nome'));
+        $('#descricao').attr('value',$(this).attr('descricao'));
+        $('#valor').attr('value',$(this).attr('valor'));
 		});
 /*
     //para quando o modal abrir
