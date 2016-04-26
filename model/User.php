@@ -69,6 +69,40 @@ require_once 'model/conection.php';
 			return $rows;
 		}
 
+		function addProduto( $nome, $descricao, $valor)
+		{
+
+			$this->connDataBase->query('INSERT INTO item (nome, descricao, valor, ativo)
+																	VALUES (:nome, :descricao, :valor, :ativo);');
+			$this->connDataBase->bind(':nome', $nome);
+			$this->connDataBase->bind(':descricao', $descricao);
+			$this->connDataBase->bind(':valor', $valor);
+			$this->connDataBase->bind(':ativo', 1);
+			$this->connDataBase->execute();
+
+		}
+
+		function excluirProduto($idItem)
+		{
+
+			$this->connDataBase->query("DELETE FROM item WHERE idItem = :idITem;");
+			$this->connDataBase->bind(':idITem', $idItem);
+			$this->connDataBase->execute();
+
+		}
+
+		function editarProduto($idItem, $nome, $descricao, $valor)
+		{
+			$this->connDataBase->query('UPDATE item
+																	SET  nome=:nome, descricao=:descricao, valor=:valor
+																	WHERE idItem=:idItem;');
+			$this->connDataBase->bind(':idItem', $idItem);
+			$this->connDataBase->bind(':nome', $nome);
+			$this->connDataBase->bind(':descricao', $descricao);
+			$this->connDataBase->bind(':valor', $valor);
+			$this->connDataBase->execute();
+		}
+
 		function setInativoJSON($id)
 		{
 			$this->connDataBase->query('UPDATE item SET ativo=0 WHERE idItem = :idItem;');

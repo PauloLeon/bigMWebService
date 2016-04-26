@@ -13,7 +13,7 @@
         console.log($(this).attr('id'));
         $('#id').attr('value',$(this).attr('id'));
         console.log($('#id').attr('value'));
-        $('#nome').attr('value',$(this).attr('nome'));
+        $('#nomeProduto').attr('value',$(this).attr('nome'));
         $('#descricao').attr('value',$(this).attr('descricao'));
         $('#valor').attr('value',$(this).attr('valor'));
 		});

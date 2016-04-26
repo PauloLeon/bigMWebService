@@ -17,6 +17,15 @@ if (!empty($_POST['ativo'])) {
 if (!empty($_POST['inativo'])) {
 		$user->setInativoJSON($_POST['idProduto']);
 }
+if (!empty($_POST['submitNewProduto'])) {
+		$user->addProduto($_POST['nomeProduto'],$_POST['descricao'],$_POST['valor']);
+}
+if (!empty($_POST['excluir'])) {
+		$user->excluirProduto($_POST['idProduto']);
+}
+if (!empty($_POST['editar'])) {
+		$user->editarProduto($_POST['idProduto'],$_POST['nomeProduto'],$_POST['descricao'],$_POST['valor']);
+}
 //obtendo lista de itens
 $jsonItens= $user->getItensJSON();
 
@@ -216,7 +225,7 @@ function debug_to_console( $data )
 																											  <div class="form-group">
 																											    <label class="col-md-3 control-label" for="nome">Nome</label>
 																											    <div class="col-md-8">
-																											    <input id="nome" name="nome" class="form-control input-md" required="" type="text" value=" <?=$nomeProduto;?>">
+																											    <input id="nomeProduto" name="nomeProduto" class="form-control input-md" required="" type="text" value=" <?=$nomeProduto;?>">
 																											    </div>
 																											  </div>
 																												<!-- Descrição -->
@@ -235,8 +244,8 @@ function debug_to_console( $data )
 																											  </div>
                                                     </div>
                                                     <div class="modal-footer">
-																											  <button type="submit" class="btn btn-danger" name="inativo" value="Submit">Excluir</button>
-																												<button type="editar" class="btn btn-warning" name="inativo" value="Submit">Editar</button>
+																											  <button type="submit" class="btn btn-danger" name="excluir" value="Submit">Excluir</button>
+																												<button type="submit" class="btn btn-warning" name="editar" value="Submit">Editar</button>
                                                         <button type="submit" class="btn btn-default" name="inativo" value="Submit">Desativar</button>
 																												<button type="submit" class="btn btn-primary" name="ativo" value="Submit">Ativar</button>
                                                     </div>
@@ -264,7 +273,7 @@ function debug_to_console( $data )
 																												<div class="form-group">
 																													<label class="col-md-3 control-label" for="nome">Nome</label>
 																													<div class="col-md-8">
-																													<input id="nome" name="nome" class="form-control input-md" required="" type="text" value=" <?=$nomeProduto;?>">
+																													<input id="nomeProduto" name="nomeProduto" class="form-control input-md" required="" type="text" value=" <?=$nomeProduto;?>">
 																													</div>
 																												</div>
 																												<!-- Descrição -->
@@ -283,7 +292,7 @@ function debug_to_console( $data )
 																												</div>
 																										</div>
 																										<div class="modal-footer">
-																												<button type="submitNewProduto" class="btn btn-primary" name="ativo" value="Submit">Adicionar</button>
+																												<button type="submit" class="btn btn-primary" name="submitNewProduto" value="Submit">Adicionar</button>
 																										</div>
 																									</form>
 																								</div>
