@@ -69,14 +69,24 @@ require_once 'model/conection.php';
 			return $rows;
 		}
 
-		function addProduto( $nome, $descricao, $valor)
+		function getCategoriaJSON()
 		{
 
-			$this->connDataBase->query('INSERT INTO item (nome, descricao, valor, ativo)
-																	VALUES (:nome, :descricao, :valor, :ativo);');
+			$this->connDataBase->query('SELECT * from categoria;');
+			$rows = $this->connDataBase->resultset();
+			$json = json_encode($rows);
+			return $rows;
+		}
+
+		function addProduto( $nome, $descricao, $valor, $idCategoria)
+		{
+
+			$this->connDataBase->query('INSERT INTO item (nome, descricao, valor, ativo, idCategoria)
+																	VALUES (:nome, :descricao, :valor, :ativo, :idCategoria);');
 			$this->connDataBase->bind(':nome', $nome);
 			$this->connDataBase->bind(':descricao', $descricao);
 			$this->connDataBase->bind(':valor', $valor);
+			$this->connDataBase->bind(':idCategoria', $idCategoria);
 			$this->connDataBase->bind(':ativo', 1);
 			$this->connDataBase->execute();
 

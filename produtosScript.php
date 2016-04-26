@@ -7,7 +7,8 @@
 
 
 <script >
-
+    $("#categoriaInput").val("Escolha as opções ao lado");
+    $("#categoriaInput").prop("disabled", true);
     $("#listPedidos li").click(function() {
         console.log("Entrou");
         console.log($(this).attr('id'));
@@ -16,7 +17,22 @@
         $('#nomeProduto').attr('value',$(this).attr('nome'));
         $('#descricao').attr('value',$(this).attr('descricao'));
         $('#valor').attr('value',$(this).attr('valor'));
+        $('#categoria').attr('value',$(this).attr('categoria'));
 		});
+
+    //lista de coordenacao
+      $("#categoriaList a").click(function() {
+    	  var categoria = $(this).html();// get nome
+        var idCategoria = $(this).attr('id');// get nome
+        $("#idCategoria").val(idCategoria);
+        $("#categoriaInput").prop("disabled", false);
+    		$("#categoriaInput").val(categoria);
+        $("#categoriaInput").prop("disabled", true);
+      });
+
+      $("#submitNewProduto").click(function() {
+        $("#categoriaInput").prop("disabled", false);
+      });
 /*
     //para quando o modal abrir
     $('#detalheModal').on('show.bs.modal', function (e)

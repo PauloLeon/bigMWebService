@@ -18,7 +18,7 @@ if (!empty($_POST['inativo'])) {
 		$user->setInativoJSON($_POST['idProduto']);
 }
 if (!empty($_POST['submitNewProduto'])) {
-		$user->addProduto($_POST['nomeProduto'],$_POST['descricao'],$_POST['valor']);
+		$user->addProduto($_POST['nomeProduto'],$_POST['descricao'],$_POST['valor'],$_POST['idCategoria']);
 }
 if (!empty($_POST['excluir'])) {
 		$user->excluirProduto($_POST['idProduto']);
@@ -28,6 +28,8 @@ if (!empty($_POST['editar'])) {
 }
 //obtendo lista de itens
 $jsonItens= $user->getItensJSON();
+$jsonCategoria= $user->getCategoriaJSON();
+
 
 
 function debug_to_console( $data )
@@ -242,6 +244,13 @@ function debug_to_console( $data )
 																											    <input id="valor" name="valor" class="form-control input-md" required="" type="text" value=" <?=$valor;?>">
 																											    </div>
 																											  </div>
+																												<!-- categoria -->
+																											  <div class="form-group">
+																											    <label class="col-md-3 control-label" for="nome">Categoria</label>
+																											    <div class="col-md-8">
+																											    <input id="categoria" name="categoria" disabled="disabled" class="form-control input-md" required="" type="text" value=" <?=$categoria;?>">
+																											    </div>
+																											  </div>
                                                     </div>
                                                     <div class="modal-footer">
 																											  <button type="submit" class="btn btn-danger" name="excluir" value="Submit">Excluir</button>
@@ -290,9 +299,36 @@ function debug_to_console( $data )
 																													<input id="valor" name="valor" class="form-control input-md" required="" type="text" value=" <?=$valor;?>">
 																													</div>
 																												</div>
+																												<input type="text" class="form-control" id="idCategoria" name="idCategoria" value="<?=$idCategoria;?>" style="visibility: hidden; height: 0px;padding: 0px;margin:0px;" />
+																												<!-- Categoria Drop Down-->
+																											  <div class="form-group">
+																											    <label class="col-md-3 control-label" for="buttondropdown">Categoria</label>
+																											    <div class="col-md-8">
+																											      <div class="input-group">
+																											        <input id="categoriaInput" name="categoriaInput" class="form-control" placeholder="" required="" type="text" value=" <?=$categoria;?>">
+																											        <div class="input-group-btn">
+																											          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+																											            Selecione
+																											            <span class="caret"></span>
+																											          </button>
+																											          <ul id="categoriaList" class="dropdown-menu pull-right">
+																																	<?php
+																																		 if (empty($jsonCategoria)) {
+																																				 echo'<li class="list-group-item">'.'Ops! Alguma coisa aconteceu, você está sem produtos cadastrados no sistema.'.'</li>';
+																																		 }
+
+																																		 foreach ($jsonCategoria as $val) {
+																																					echo '<li ><a id='.$val['idCategoria'].' href="#">'.$val['nome'].'</a></li>';
+																																		 }
+																																 ?>
+																											          </ul>
+																											        </div>
+																											      </div>
+																											    </div>
+																											  </div>
 																										</div>
 																										<div class="modal-footer">
-																												<button type="submit" class="btn btn-primary" name="submitNewProduto" value="Submit">Adicionar</button>
+																												<button type="submit" class="btn btn-primary" id="submitNewProduto" name="submitNewProduto" value="Submit">Adicionar</button>
 																										</div>
 																									</form>
 																								</div>
