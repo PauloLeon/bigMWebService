@@ -15,11 +15,15 @@ require_once 'model/conection.php';
 
 		function __construct($nomeSession,$idUserSession)
     {
-				// Define configuration
+				// Define configuration  31.220.104.1
 				define("DB_HOST", "localhost:8889");
 				define("DB_USER", "root");
 				define("DB_PASS", "root");
 				define("DB_NAME", "webapp");
+			/*	define("DB_HOST", "localhost");
+				define("DB_USER", "u244890757_root");
+				define("DB_PASS", "LDh15vdx96");
+				define("DB_NAME", "u244890757_webap");*/
 				$this->connDataBase = new Database();
 				$this->userName = $nomeSession;
 				$this->idUser = $idUserSession;

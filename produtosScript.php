@@ -7,8 +7,11 @@
 
 
 <script >
+
+    $("#valoradd").mask("99.99");
     $("#categoriaInput").val("Escolha as opções ao lado");
     $("#categoriaInput").prop("disabled", true);
+
     $("#listPedidos li").click(function() {
         console.log("Entrou");
         console.log($(this).attr('id'));

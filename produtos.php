@@ -18,7 +18,7 @@ if (!empty($_POST['inativo'])) {
 		$user->setInativoJSON($_POST['idProduto']);
 }
 if (!empty($_POST['submitNewProduto'])) {
-		$user->addProduto($_POST['nomeProduto'],$_POST['descricao'],$_POST['valor'],$_POST['idCategoria']);
+		$user->addProduto($_POST['nomeProduto'],$_POST['descricao'],$_POST['valoradd'],$_POST['idCategoria']);
 }
 if (!empty($_POST['excluir'])) {
 		$user->excluirProduto($_POST['idProduto']);
@@ -133,7 +133,7 @@ function debug_to_console( $data )
                                 </div>
                                 <div class="col-md-4">
 																	<div class="form-group">
-																		<button class="btn btn-success" data-toggle="modal" data-target="#categoriaModal" name="categoriaIncluir"  value="submit_insert"><span class="glyphicon glyphicon-plus"></span>Nova Categoria</button>
+																		<button class="btn btn-success" data-toggle="modal" data-target="#categoriaModal" name="categoriaIncluir"  value="submit_insert">Cadastro Categoria</button>
 																	</div>
 																</div>
                                 <div class="col-lg-12" id="admin">
@@ -169,6 +169,7 @@ function debug_to_console( $data )
                                                             </div>
                                                         </div>
                                                     </h3>
+																										<h2 class="panel-title" style="text-align: center; margin-bottom: 10px; color: red;">Clique no produto para editar</h2>
                                                     <div class="panel panel-primary">
                                                         <div class="panel-heading">
                                                             <div class="row">
@@ -195,7 +196,9 @@ function debug_to_console( $data )
 																																							valor="'.$val['valor'].'"
 																																							categoria="'.$val['categoria'].'" class="list-group-item"  data-toggle="modal" data-target="#detalheModal" style="padding-top: 15px;padding-bottom: 15px;" >
  																																						 <div class="pedidosSearch row">
- 																																								 <div class="col-xs-4 col-sm-4 col-md-4">'.$val['nome'].'</div>
+ 																																								 <div class="col-xs-2 col-sm-2 col-md-2">'.$val['nome'].'</div>
+																																								 <div class="col-xs-4 col-sm-4 col-md-4">'.$val['descricao'].'</div>
+																																								 <div class="col-xs-2 col-sm-2 col-md-2">R$'.$val['valor'].'</div>
  																																								 <div style="color: blue;" class="col-xs-4 col-sm-4 col-md-4">'.$ativo.'</div>
  																																						 </div>
  																																				 </li>';
@@ -207,7 +210,9 @@ function debug_to_console( $data )
 																																								valor="'.$val['valor'].'"
 																																								categoria="'.$val['categoria'].'"  class="list-group-item"  data-toggle="modal" data-target="#detalheModal" style="padding-top: 15px;padding-bottom: 15px;" >
  																																						 <div class="pedidosSearch row">
- 																																								 <div class="col-xs-4 col-sm-4 col-md-4">'.$val['nome'].'</div>
+																																						 		 <div class="col-xs-2 col-sm-2 col-md-2">'.$val['nome'].'</div>
+																																								 <div class="col-xs-4 col-sm-4 col-md-4">'.$val['descricao'].'</div>
+																																								 <div class="col-xs-2 col-sm-2 col-md-2">R$'.$val['valor'].'</div>
  																																								 <div style="color: red;" class="col-xs-4 col-sm-4 col-md-4">'.$ativo.'</div>
  																																						 </div>
  																																				 </li>';
@@ -254,8 +259,11 @@ function debug_to_console( $data )
 																											  <div class="form-group">
 																											    <label class="col-md-3 control-label" for="nome">Valor</label>
 																											    <div class="col-md-8">
-																											    <input id="valor" name="valor" class="form-control input-md" required="" type="text" value=" <?=$valor;?>">
-																											    </div>
+																														<div class="input-group">
+																															<span class="input-group-addon">R$</span>
+																															<input id="valor" name="valor" class="form-control input-md" required="" type="text" value=" <?=$valor;?>">
+																														</div>
+																													</div>
 																											  </div>
 																												<!-- categoria -->
 																											  <div class="form-group">
@@ -266,10 +274,10 @@ function debug_to_console( $data )
 																											  </div>
                                                     </div>
                                                     <div class="modal-footer">
-																											  <button type="submit" class="btn btn-danger" name="excluir" value="Submit">Excluir</button>
-																												<button type="submit" class="btn btn-warning" name="editar" value="Submit">Editar</button>
-                                                        <button type="submit" class="btn btn-default" name="inativo" value="Submit">Desativar</button>
-																												<button type="submit" class="btn btn-primary" name="ativo" value="Submit">Ativar</button>
+																											  <button type="submit" class="btn btn-danger pull-left" name="excluir" value="Submit">Excluir</button>
+																												<button type="submit" class="btn btn-warning pull-left" name="editar" value="Submit">Alterar</button>
+                                                        <button type="submit" class="btn btn-default" name="inativo" value="Submit">Indisponível</button>
+																												<button type="submit" class="btn btn-primary" name="ativo" value="Submit">Disponível</button>
                                                     </div>
 																									</form>
                                                 </div>
@@ -309,7 +317,10 @@ function debug_to_console( $data )
 																												<div class="form-group">
 																													<label class="col-md-3 control-label" for="nome">Valor</label>
 																													<div class="col-md-8">
-																													<input id="valor" name="valor" class="form-control input-md" required="" type="text" value=" <?=$valor;?>">
+																														<div class="input-group">
+																															<span class="input-group-addon">R$</span>
+																															<input id="valoradd" name="valoradd" class="form-control input-md" required="" type="text" value=" <?=$valor;?>">
+																														</div>
 																													</div>
 																												</div>
 																												<input type="text" class="form-control" id="idCategoria" name="idCategoria" value="<?=$idCategoria;?>" style="visibility: hidden; height: 0px;padding: 0px;margin:0px;" />
