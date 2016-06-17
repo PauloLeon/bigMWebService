@@ -6,9 +6,20 @@ error_reporting(0);
 include '../bigMWebService/model/conection.php';
 //require user class
 include ('../bigMWebService/model/User.php');
-$id = "1";
+/*$id = "1";
 $nome = "admin";
-$user = new User($nome ,$id );
+$user = new User($nome ,$id );*/
+//iniciando sessão
+require_once('../bigMWebService/model/User.php');
+session_start();
+debug_to_console(session_id());
+debug_to_console($_SESSION['test']);
+
+if($_SESSION['userLogado']==""){
+  debug_to_console("Sessao não iniciada direito - ARQUIVO:admin.php");
+}else{
+  debug_to_console("Aqui Existe");
+}
 $inputPedido = "";
 if (!empty($_POST['confirmar'])) {
 	debug_to_console("confirmar");
@@ -256,7 +267,7 @@ function debug_to_console( $data )
 			      <div class="modal-footer">
 							<div class="form-group">
 			        </div>
-							<button type="submit" name="confirmar" value="Submit"class="btn btn-primary" >Confirmar Pedido</button>
+							<button type="submit" name="confirmar" value="Submit" class="btn btn-primary" >Confirmar Pedido</button>
 							<button type="submit" name="rejeitar" value="Submit" class="btn btn-default" >Rejeitar Pedido</button>
 			      </div>
 			      </form>

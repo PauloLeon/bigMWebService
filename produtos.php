@@ -303,14 +303,14 @@ function debug_to_console( $data )
 																												<div class="form-group">
 																													<label class="col-md-3 control-label" for="nome">Nome</label>
 																													<div class="col-md-8">
-																													<input id="nomeProduto" name="nomeProduto" class="form-control input-md" required="" type="text" value=" <?=$nomeProduto;?>">
+																													<input id="nomeProduto" name="nomeProduto" class="form-control input-md" required="" type="text" value="<?=$nomeProduto;?>">
 																													</div>
 																												</div>
 																												<!-- Descrição -->
 																												<div class="form-group">
 																													<label class="col-md-3 control-label" for="nome">Descrição</label>
 																													<div class="col-md-8">
-																													<input id="descricao" name="descricao" class="form-control input-md" required="" type="text" value=" <?=$descricao;?>">
+																													<input id="descricao" name="descricao" class="form-control input-md" required="" type="text" value="<?=$descricao;?>">
 																													</div>
 																												</div>
 																												<!-- valor -->
@@ -319,7 +319,7 @@ function debug_to_console( $data )
 																													<div class="col-md-8">
 																														<div class="input-group">
 																															<span class="input-group-addon">R$</span>
-																															<input id="valoradd" name="valoradd" class="form-control input-md" required="" type="text" value=" <?=$valor;?>">
+																															<input id="valoradd" name="valoradd" class="form-control input-md" required="" type="text" value="<?=$valor;?>">
 																														</div>
 																													</div>
 																												</div>
@@ -329,7 +329,7 @@ function debug_to_console( $data )
 																											    <label class="col-md-3 control-label" for="buttondropdown">Categoria</label>
 																											    <div class="col-md-8">
 																											      <div class="input-group">
-																											        <input id="categoriaInput" name="categoriaInput" class="form-control" placeholder="" required="" type="text" value=" <?=$categoria;?>">
+																											        <input id="categoriaInput" name="categoriaInput" class="form-control" placeholder="" required="" type="text" value="<?=$categoria;?>">
 																											        <div class="input-group-btn">
 																											          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
 																											            Selecione

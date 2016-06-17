@@ -25,6 +25,7 @@ $login = $_GET['login'];
 $senha = $_GET['senha'];
 debug_to_console($login);
 debug_to_console($senha);
+$_SESSION['userLogado'];
 
 //se o usuario entrar com os dados corretamente
 if(empty($errorMessage))
@@ -39,7 +40,7 @@ if(empty($errorMessage))
         debug_to_console("indo");
     $row = $database->single();
 
-
+$_SESSION['test']= "test";
     if (empty($row)) {
       # code...
        debug_to_console("não achou nada");
@@ -49,7 +50,7 @@ if(empty($errorMessage))
         setcookie(session_name(), '', time()-42000, '/');
       }
       session_destroy();
-      echo '<meta HTTP-EQUIV="Refresh" CONTENT="0; URL=../bigMWebService/index.php">';
+      //echo '<meta HTTP-EQUIV="Refresh" CONTENT="0; URL=../bigMWebService/index.php">';
     }else{
       debug_to_console($row);
       $id = $row['idUsuario'];
@@ -58,17 +59,22 @@ if(empty($errorMessage))
       if($_SESSION['userLogado']=="")
       debug_to_console("Sessao não iniciada direito - ARQUIVO:actionLogin");
       debug_to_console($_SESSION['userLogado']->getNome());
+      debug_to_console("Sessao  iniciada direito - ARQUIVO:actionLogin");
       echo '<meta HTTP-EQUIV="Refresh" CONTENT="0; URL=../bigMWebService/admin.php">';
     }
+
+    if($_SESSION['userLogado']==""){
+      debug_to_console("Sessao não iniciada direito - ARQUIVO:actionLogin");
+    }else{
+      debug_to_console("Aqui Existe");
+      debug_to_console(session_id());
+
+    }
+
+    exit;
 }
 
-if($_SESSION['userLogado']==""){
-  debug_to_console("Sessao não iniciada direito - ARQUIVO:actionLogin");
-}else{
-  debug_to_console("Aqui Existe");
-}
 
-exit;
 
 
 
